@@ -1,0 +1,273 @@
+<!-- <app-loader></app-loader> -->
+<!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" [fullScreen] = "true"> -->
+  <!-- <div class="spinner-border text-success m-1" role="status"> -->
+  <!-- <span class="sr-only">Loading...</span> -->
+<!-- </div> -->
+<!-- </ngx-spinner>   -->
+      <!-- dashboard.component.html -->
+<!-- <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-spin-clockwise"></ngx-spinner> -->
+
+<!-- Date Filter Modal -->
+<!-- Date Filter Modal -->
+<ng-template #dateFilterContent>
+  <div class="modal-header">
+    <h5 class="modal-title">Filter by Date</h5>
+    <button type="button" class="btn-close" (click)="closeDateFilterModal()" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="dateFilterForm">
+      <!-- Start Date Input -->
+      <div class="mb-3">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input
+          type="date"
+          class="form-control"
+          id="startDate"
+          formControlName="startDate"
+          (change)="onStartDateChange($event)"
+          [max]="dateFilterForm.get('endDate').value"
+          [value]="selectedStartDate || ''"
+        />
+        <div *ngIf="dateFilterForm.get('startDate')['errors']?.['required'] && dateFilterForm.get('startDate').touched" class="text-danger">
+          Start Date is required.
+        </div>
+      </div>
+
+      <!-- End Date Input -->
+      <div class="mb-3">
+        <label for="endDate" class="form-label">End Date</label>
+        <input
+          type="date"
+          class="form-control"
+          id="endDate"
+          formControlName="endDate"
+          (change)="onEndDateChange($event)"
+          [min]="dateFilterForm.get('startDate').value"
+          [value]="selectedEndDate || ''"
+        />
+        <div *ngIf="dateFilterForm.get('endDate')['errors']?.['required'] && dateFilterForm.get('endDate').touched" class="text-danger">
+          End Date is required.
+        </div>
+        <div *ngIf="dateFilterForm['errors']?.['dateRangeInvalid'] && dateFilterForm.get('endDate').touched" class="text-danger">
+          End Date cannot be earlier than Start Date.
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="closeDateFilterModal()">Cancel</button>
+    <button type="button" class="btn btn-success" (click)="clearDateFilter()">Clear</button>
+    <button type="button" class="btn btn-primary" (click)="applyDateFilter()" [disabled]="dateFilterForm.invalid">Apply</button>
+  </div>
+</ng-template>
+
+
+
+
+
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+></ngx-spinner>
+        <div class="card-body "  *ngIf="isdataloaded">
+          <!-- <label  class="form-label">Filter By</label> -->
+          <form  [formGroup]="formFilter">
+            <div class="row g-3">
+              <div class="col-4"></div>
+              <h1 style="font-size: 40px; font-weight: bold;" class="validation text-center  text-primary">Validation system</h1>
+              <!-- <div class="col-xxl-9 col-lg-9"> -->
+                <!-- <button type="reset" class="btn btn-primary  text-white " (click)="clearfilter()"><i class="mdi mdi-filter-outline align-middle"></i> Clear Filter</button> -->
+                <div class="col-xxl-12 col-lg-3 text-end mb-2 d-flex justify-content-end align-items-center">
+
+<!-- Dropdown for Filter by Stage -->
+
+            <div class="dropdown me-2">
+              <button class="btn btn-primary dropdown-toggle" type="button" id="stageFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  Filter by Stage: {{ getSelectedStageName() }}
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="stageFilterDropdown">
+                  <li><a class="dropdown-item" [class.active]="!selectedStage" href="javascript:void(0);" (click)="filterByStage('all')"><i class="ti ti-check" *ngIf="!selectedStage"></i> All</a></li>
+                  <li *ngFor="let stage of stages">
+                      <a class="dropdown-item" [class.active]="selectedStage === stage.id" href="javascript:void(0);" (click)="filterByStage(stage.id)">
+                          <i class="ti ti-check" *ngIf="selectedStage === stage.id"></i> {{ stage.action }}
+                      </a>
+                  </li>
+              </ul>
+            </div>
+
+
+
+                  <!-- Dropdown for Filter by Date -->
+                  <div class="dropdown me-2">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dateFilterDropdown" data-bs-toggle="dropdown" (click)="openDateFilterModal(dateFilterContent)" aria-expanded="false">
+                      Filter by Date
+                    </button>
+                  </div>
+                
+                  <!-- Upload Invoice Button -->
+                
+                  <!-- Location Dropdown -->
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{ selectedLocation === 'allLocation' ? 'All Location' : 'My Location' }}
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#" (click)="onLocationChange($event, 'allLocation')">All Location</a></li>
+                      <li><a class="dropdown-item" href="#" (click)="onLocationChange($event, 'myLocation')">My Location</a></li>
+                    </ul>
+                  </div>
+                  <a href="javascript:void(0);" class="btn btn-success ms-2" (click)="openUploadModal(uploadcontent)">Upload Invoice</a>
+  
+                </div>
+              </div>
+              
+              
+            <!-- </div> -->
+          
+          </form> 
+        </div>
+        <div class="card-body"  *ngIf="isdataloaded">
+            <div class="row mb-md-2 mt-2">
+              <div class="col-sm-12 col-md-6">
+                <div class="dataTables_length" id="invoice-table_length"><label
+                    class="d-inline-flex align-items-center">Show
+                    <select name="invoice-table_length" aria-controls="invoice-table" name="pageSize"
+                      [(ngModel)]="service.pageSize" class="form-control form-control-sm mx-2">
+                      <option [ngValue]="10">10</option>
+                      <option [ngValue]="25">25</option>
+                      <option [ngValue]="50">50</option>
+                      <option [ngValue]="100">100</option>
+                    </select> entries</label>
+                </div>
+              </div>
+              <div class="col-sm-12 col-md-3"></div>
+              <!-- <div class="col-sm-12 col-md-3">
+                <input type="search" class="form-control" id="searchInput"  name="searchInput" formControlName="searchInput"  placeholder="Search for ..." [(ngModel)]="service.searchTerm">
+              </div> -->
+            </div>
+            <form  [formGroup]="formFilter">
+                <div class="row g-3">
+                  <div class="col-xxl-4 col-lg-6">
+                    <input type="search" class="form-control" id="searchInput"  name="searchInput" formControlName="searchInput"  placeholder="Search for ..." [(ngModel)]="service.searchTerm">
+                    
+                  </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+              <table class="table align-middle dt-responsive nowrap w-100 table-check" id="invoice-list">
+                <thead class=" bg-step">
+                  <tr>
+                    <th scope="col" >Sr. No</th>
+                    <th scope="col" >Invoice PDF Document</th>
+                    <th scope="col" >Invoice extracted Output File</th>
+                    <th scope="col" >Available Date</th>    
+                    <th scope="col" >Processed Date</th>    
+                    <!-- <th scope="col" >Invoice Date</th>     -->
+                    <!-- <th scope="col" >Invoice Number</th>     -->
+                    <th scope="col" >Stage</th>    
+                    <!-- <th scope="col" >Total Field</th>    
+                    <th scope="col" >Extracted Field</th>     -->
+                    <th scope="col" >Accuracy</th>    
+                    <th scope="col" >Vendor Name</th>  
+                    <!-- <th scope="col" >Grand Total</th>    
+                    <th scope="col" >Barcode</th>    
+                    <th scope="col" >Validated</th> -->
+                    <th scope="col" >Location</th>
+                    <th scope="col" >Action</th>
+                  </tr>
+                </thead>
+                <!-- <tbody> -->
+                  <tbody *ngIf="(invoiceList | async).length == 0">
+                    <tr><td colspan="9" style="text-align: center;">No data available</td></tr>
+                  </tbody>
+              
+                  <tbody  *ngIf="(invoiceList | async).length > 0">
+                  <tr  *ngFor="let pdata of invoiceList | async;let i=index">
+                    <th scope="row">{{service.startIndex +i}}</th>
+                    <td>
+                      <span  *ngIf="pdata['isvalidated'] == 1"><a [href]="pdata['filepath']" class="validatedunderlineanchor" target="_blank">{{pdata['filename']}}</a><i  class="ti ti-check validatedlarge-icon text" ></i></span>
+                      <a [href]="pdata['filepath']" *ngIf="pdata['isvalidated'] != 1" class="underlineanchor" target="_blank">{{pdata['filename']}}</a>
+                    </td>
+                    <td><a [href]="pdata['excelfilepath']" class="underlineanchor" target="_blank">{{pdata['excelfilename']}}</a></td>
+                    <td>{{pdata['available-date']}}</td>  
+                    <td>{{pdata['processed-date']}}</td>  
+                    <!-- <td>{{pdata['invoice-date']}}</td>   -->
+                    <!-- <td>{{pdata['invoice-number']}}</td>   -->
+                    <td>{{pdata['stage']}}</td>  
+                    <!-- <td>{{pdata['total-field']}}</td>  
+                    <td>{{pdata['extracted-field']}}</td>   -->
+                    <td>{{pdata['accuracy']}}</td>  
+                    <td>{{pdata['vendor-name']}}</td>  
+                    <td>{{pdata['location']}}</td>  
+
+                    <!-- <td>{{pdata['grand-total']}}</td>  
+                    <td>{{pdata['barcode-number']}}</td>   
+                    <td class=" text-success"><i  *ngIf="pdata['isvalidated'] == 1" class="ti ti-check large-icon" ></i></td>  -->
+                    <td><a  href="javascript: void(0);" (click)="navigatetodetails(pdata['id'])" class="text-primary" ><i class="ti ti-pencil large-icon pt-3"></i></a>          </td>
+                  </tr> 
+                </tbody>
+              </table>
+            </div>
+            <!-- End table -->
+            <div class="row justify-content-md-between align-items-md-center mt-2">
+              <div class="col-sm-12 col-md-5">
+                  <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                      Showing
+                      {{service.startIndex}} to
+                      {{service.endIndex}} of {{service.totalRecords}}
+                      entries
+                  </div>
+              </div>
+              
+              <!-- Pagination --> 
+              <div class="col-sm-12 col-md-5">
+                  <div class="text-md-right float-md-end pagination-rounded">
+                    
+                    <pagination   [boundaryLinks]="true" [totalItems]="(total$ | async)!"  
+                    [(ngModel)]="service.page"
+                    
+                     [itemsPerPage]="service.pageSize" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&lsaquo;&lsaquo;" lastText="&rsaquo;&rsaquo;"
+                    [maxSize] = "5"
+                    [rotate] = "true"
+                    ></pagination>
+                  </div>
+              </div>
+              <!-- End Pagination -->
+            </div>
+          </div>
+
+
+  <!-- Service Create/Edit Model -->
+  <ng-template #uploadcontent role="document" let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Upload Invoice</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modalRef?.hide()"></button>
+    </div>
+    <form (ngSubmit)="uploadInvoice()" [formGroup]="uploadForm">
+      <div class="modal-body">
+        <input type="hidden" name="id" value="" formControlName="ids" />
+        
+        
+        <div class="mb-3" >
+          <label for="invoicefile">Invoice File</label>
+          
+          <input class="form-control" type="file" id="invoicefile" name="invoicefile"  formControlName="invoicefile"  (change)="onFileSelected($event)" accept=".pdf"  [ngClass]="{'is-invalid': submitted && uploadform['invoicefile'].errors}" >
+          <div *ngIf="submitted && uploadform['invoicefile'].errors" class="invalid-feedback">
+              <span *ngIf="uploadform['invoicefile'].errors['required']">Please provide a valid file.</span>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <div class="hstack gap-2 justify-content-end">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="modalRef?.hide()">Close</button>
+          <button type="submit" class="btn btn-success" id="add-btn">Upload</button>
+        </div>
+      </div>
+    </form>
+  
+  </ng-template>
+  <!--End Modal -->

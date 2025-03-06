@@ -1,0 +1,63 @@
+ngx-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+}
+
+.large-icon {
+  font-size: 1.9em; /* Adjust size as needed */
+}
+
+table {
+  color: #595959 !important;
+}
+
+.table {
+  --bs-table-color: #595959 !important;
+  --bs-table-bg: inherit !important;
+}
+
+.bg-step {
+  background-color: rgba(0, 0, 0, .05) !important;
+  color: #595959 !important;
+}
+
+.underlineanchor {
+  color: #595959 !important;
+  text-decoration: underline !important;
+}
+
+.validatedunderlineanchor {
+  color: #009900 !important;
+  text-decoration: underline !important;
+}
+
+.validatedlarge-icon {
+  font-size: 1.9em; /* Adjust size as needed */
+  color: #009900 !important;
+}
+
+.page-link.active, .active > .page-link {
+  z-index: 3;
+  color: #fff !important;
+  background-color: var(--bs-pagination-active-bg);
+  border-color: var(--bs-pagination-active-border-color);
+}
+
+.me-2 {
+  margin-right: 0.5rem !important;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.justify-content-end {
+  justify-content: flex-end !important;
+}
+
+.align-items-center {
+  align-items: center !important;
+}

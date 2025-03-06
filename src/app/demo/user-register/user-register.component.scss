@@ -1,0 +1,205 @@
+.overlay {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(226, 226, 226, 0.5); /* Dark semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensures it is above other content */
+  animation: fadeIn 0.3s ease-in-out; /* Smooth fade-in effect */
+}
+
+/* Centered form container */
+.container {
+  position: relative;
+  right: 340px;
+  max-width: 650px;
+  max-height: 750px;
+  width: 100%;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  z-index: 1001; /* Ensures it's above the overlay */
+  margin: 50px;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.container:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  position: relative;
+}
+
+label {
+  font-weight: bolder;
+  font-size: 17px;
+  color: #646464;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-control {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  font-size: 15px;
+  transition: all 0.3s ease-in-out;
+  background: #f9f9f9;
+}
+
+.form-control:hover {
+  border-color: #007bff;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  background: #fff;
+  outline: none;
+}
+
+select.form-control {
+  appearance: none;
+  background-color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+select.form-control:hover {
+  border-color: #007bff;
+}
+
+button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  color: #fff;
+  width: 100%;
+  display: block;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+/* Smooth hover effect for input fields */
+input[type="text"], input[type="password"], input[type="email"], select {
+  transition: transform 0.2s ease-in-out;
+}
+
+input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, select:hover {
+  transform: scale(1.02);
+}
+
+/* Improve focus animations */
+input:focus, select:focus {
+  background: #eef6ff;
+}
+
+/* Add floating labels effect */
+.form-group input:not(:placeholder-shown) + label,
+.form-group select:not(:placeholder-shown) + label {
+  transform: translateY(-20px);
+  font-size: 12px;
+  color: #007bff;
+}
+
+/* Add smooth transition */
+.form-group label {
+  transition: all 0.3s ease-in-out;
+}
+
+.action {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.action button {
+  height: 45px;
+  font-weight: bold;
+  flex: 1;
+}
+
+/* Dropdown icon styling */
+.select-wrapper {
+  position: relative;
+}
+
+.select-wrapper i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #666;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    max-width: 100%;
+    padding: 15px;
+  }
+}
+
+.action{
+  display: flex;
+  gap: 40px;
+  padding: 25px;
+}.action button{
+  height: 45px;
+  font-weight: bold;
+  // width: 40px;
+}
+

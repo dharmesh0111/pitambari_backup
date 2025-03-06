@@ -1,0 +1,80 @@
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "square-jelly-box" >
+  <!-- <div class="spinner-border text-success m-1" role="status"> -->
+  <!-- <span class="sr-only">Loading...</span> -->
+<!-- </div> -->
+</ngx-spinner>
+<div class="row"  *ngIf="isdataloaded">
+  <div class="col-xl-4 col-md-6">
+    <div class="card  overflow-hidden ">
+      <div class="card-body">
+        <p class="mb-0 opacity-50 text-sm">Invoice Processed</p>
+        <!-- <div class="d-flex align-items-center"> -->
+          <div class="ms-2">
+            <h1 class="f-w-600 mb-1 text-warning text-center">{{processedcount}}</h1>
+          </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6">
+    
+    <div class="card overflow-hidden">
+      <div class="card-body">
+        <p class="mb-0 opacity-50 text-sm">Invoice Extracted</p>
+        <!-- <div class="d-flex align-items-center"> -->
+          <div class="ms-2">
+            <h1 class="f-w-600 mb-1 text-success  text-center">{{extractedcount}}</h1>
+          </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4 col-md-6">
+    
+    <div class="card  overflow-hidden">
+      <div class="card-body">
+        <p class="mb-0 opacity-50 text-sm">Invoice Not Extracted</p>
+        <!-- <div class="d-flex align-items-center"> -->
+          <div class="ms-2">
+            <h1 class="f-w-600 mb-1 text-red text-center">{{nonextractedcount}}</h1>
+          </div>
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="col-xl-12 col-md-12">
+    <!-- <app-bar-chart /> -->
+    <div class="card">
+      <div class="card-body">
+        <div class="row mb-3 align-items-center">
+          <div class="col">
+            <div class="text-sm">Invoice KPI </div>
+            <!-- <h3 class="mt-2 f-w-600">$2,324.00</h3> -->
+          </div>
+          <div class="col-auto">
+            <select class="form-select p-r-35" title="Select" (change)="onItemchange($event)">
+              <option selected value="thismonth">This Month</option>
+              <option  value="lastmonth" >Last Month</option>
+              <option value="thisyear">This Year</option>
+              <option value="lastyear">Last Year</option>
+              <!-- <option  value="-1" >All</option> -->
+            </select>
+          </div>
+        </div>
+        <apx-chart
+          [series]="chartOptions.series"
+          [chart]="chartOptions.chart"
+          [dataLabels]="chartOptions.dataLabels"
+          [plotOptions]="chartOptions.plotOptions"
+          [responsive]="chartOptions.responsive"
+          [xaxis]="chartOptions.xaxis"
+          [colors]="chartOptions.colors"
+          [tooltip]="chartOptions.tooltip"
+        ></apx-chart>
+      </div>
+    </div>
+  </div>
+  
+</div>

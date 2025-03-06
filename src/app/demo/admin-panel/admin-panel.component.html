@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="table-title mb-2">User Management</h4>
+        <button class="btn btn-primary add-user-btn" (click)="navigateToUserRegister()">+ Add User</button>
+    </div>
+
+    <table class="table custom-table">
+        <thead>
+            <tr>
+                <th>Sr. No</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Role</th>
+                <th>Email</th>
+                <th>Location</th>
+                <th>Created At</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of accountUserList; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>
+                  <span *ngIf="editingUser?.id !== user.id">{{ user.username }}</span>
+                  <input *ngIf="editingUser?.id === user.id" [(ngModel)]="user.username" type="text" class="form-control">
+                </td>
+                <td>**********</td>
+                <td>
+                  <span *ngIf="editingUser?.id !== user.id">{{ user.realm }}</span>
+                  <select *ngIf="editingUser?.id === user.id" [(ngModel)]="user.realm" class="form-control">
+                    <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+                  </select>
+                </td>
+                <td>
+                  <span *ngIf="editingUser?.id !== user.id">{{ user.email }}</span>
+                  <input *ngIf="editingUser?.id === user.id" [(ngModel)]="user.email" type="email" class="form-control">
+                </td>
+                <td>
+                  <span *ngIf="editingUser?.id !== user.id">{{ user.location }}</span>
+                  <select *ngIf="editingUser?.id === user.id" [(ngModel)]="user.location" class="form-control">
+                    <option *ngFor="let location of locations" [value]="location">{{ location }}</option>
+                  </select>
+                </td>
+                <td>
+                    <span *ngIf="editingUser?.id !== user.id">{{ user.createdAt }}</span>
+                    <input *ngIf="editingUser?.id === user.id" [(ngModel)]="user.createdAt" type="text" class="form-control">
+                </td>
+                <td class="action">
+                    <button *ngIf="editingUser?.id !== user.id" class="btn btn-sm btn-primary edit-btn" (click)="editUser(user)">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                            <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                          </svg>
+                    </button>
+                    <div *ngIf="editingUser?.id === user.id" class="d-flex">
+                        <button class="btn btn-sm btn-success save-btn me-1" (click)="saveUser(user)">Save</button>
+                        <button class="btn btn-sm btn-danger cancel-btn" (click)="cancelEdit()">Cancel</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="pagination-container d-flex justify-content-end">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="#">«</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">»</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>

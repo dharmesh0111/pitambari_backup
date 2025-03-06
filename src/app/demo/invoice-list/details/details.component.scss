@@ -1,0 +1,62 @@
+.container {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    height: 100vh;
+  }
+  
+  .pdf-viewer {
+    border-right: 1px solid #ccc;
+    overflow: auto;
+  }
+  
+  .form-container {
+    padding: 1rem;
+    overflow-y: auto;
+  }
+
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s;
+  
+      &.prev {
+        background-color: #0067Df; // Blue for "Previous"
+        color: white;
+  
+        &:hover {
+          // background-color: #D3E8FF; // Darker blue on hover
+          transform: translateY(-2px); // Slightly raise on hover
+        }
+  
+        &:disabled {
+          background-color: #cccccc; // Grey for disabled state
+          cursor: not-allowed;
+        }
+      }
+  
+      &.next {
+        background-color: #0067Df; // Bright blue for "Next"
+        color: white;
+  
+        &:hover {
+          // background-color: #D3E8FF; // Darker bright blue on hover
+          transform: translateY(-2px);
+        }
+  
+        &:disabled {
+          background-color: #cccccc;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+  

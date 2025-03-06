@@ -1,0 +1,27 @@
+$bg-image: '../../../../../assets/images/login-bg.jpg';
+
+:host {
+  display: flex;
+  padding-left: 2%;
+//   justify-content: center;
+//   align-items: center;
+  height: 100vh;
+  padding: 0; // Remove the padding from :host to avoid exceeding 100vh
+  background: url(#{$bg-image}) no-repeat center center;
+  background-size: cover; // Ensures the image covers the whole area
+//   background-attachment: fixed; // Keeps the background image fixed during scrolling
+
+  .login-container {
+    background: rgba(255, 255, 255, 0.8); // Semi-transparent white
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+    margin: 0 20px; // Add horizontal margins for spacing
+  }
+
+  .auth-form {
+    background: transparent !important;
+  }
+}

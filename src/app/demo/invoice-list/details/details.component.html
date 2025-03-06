@@ -1,0 +1,170 @@
+<ngx-spinner
+  bdColor="rgba(0, 0, 0, 0.8)"
+  size="medium"
+  color="#fff"
+  type="square-jelly-box"
+></ngx-spinner>
+<!-- <p>details works!</p> -->
+
+<div class="navigation mt-2">
+  <button class="prev" (click)="goToPrevious()" [disabled]="!previousId">Previous</button>
+  <button class="next" (click)="goToNext()" [disabled]="!nextId">Next</button>
+  
+</div>
+<div class="container mt-2">
+    <div class="pdf-viewer" *ngIf="safeUrl !=null">
+      <!-- Embed your PDF viewer here -->
+      <object [data]="safeUrl"  type="application/pdf" width="100%" height="100%">
+        <p>PDF cannot be displayed. <a [href]="safeUrl" >Download PDF</a></p>
+      </object>
+    </div>
+    
+    <div class="form-container">
+      <form (ngSubmit)="saveInvoice()" [formGroup]="invoiceForm">
+        <input type="hidden" name="id" value="" formControlName="ids" />
+        
+        <div class="mb-3" >
+          <label for="barcode">Distributor GSTIN</label>
+          
+          <input class="form-control" type="text" id="barcode" name="barcode"  formControlName="barcode"    [ngClass]="{'is-invalid': submitted && invoiceform['barcode'].errors}" >
+          <div *ngIf="submitted && invoiceform['barcode'].errors" class="invalid-feedback">
+              <span *ngIf="invoiceform['barcode'].errors['required']">Barcode is required.</span>
+          </div>
+      </div>
+      
+        <div class="mb-3" >
+            <label for="validate-grn-no">Distributor Name</label>
+            
+            <input class="form-control" type="text" id="validate-grn-no" name="validate-grn-no"  formControlName="validate-grn-no"    [ngClass]="{'is-invalid': submitted && invoiceform['validate-grn-no'].errors}" >
+            <div *ngIf="submitted && invoiceform['validate-grn-no'].errors" class="invalid-feedback">
+                <span *ngIf="invoiceform['validate-grn-no'].errors['required']">Validate GRN is required.</span>
+            </div>
+        </div>
+        
+        <div class="mb-3" >
+          <label for="multi-grn-no">Agent GSTIN</label>
+          
+          <input class="form-control" type="text" id="multi-grn-no" name="multi-grn-no"  formControlName="multi-grn-no"    [ngClass]="{'is-invalid': submitted && invoiceform['multi-grn-no'].errors}" >
+          <div *ngIf="submitted && invoiceform['multi-grn-no'].errors" class="invalid-feedback">
+              <span *ngIf="invoiceform['multi-grn-no'].errors['required']">Multi GRN is required.</span>
+          </div>
+      </div>
+        <div class="mb-3" >
+            <label for="invoiceno">Invoice Number</label>
+            
+            <input class="form-control" type="text" id="invoiceno" name="invoiceno"  formControlName="invoiceno"    [ngClass]="{'is-invalid': submitted && invoiceform['invoiceno'].errors}" >
+            <div *ngIf="submitted && invoiceform['invoiceno'].errors" class="invalid-feedback">
+                <span *ngIf="invoiceform['invoiceno'].errors['required']">Invoice number is required.</span>
+            </div>
+        </div>
+  
+        <div class="mb-3">
+          <label for="invoicedate" class="form-label required">Invoice Date</label>
+          
+          <input class="form-control" type="date" id="invoicedate" name="invoicedate"   formControlName="invoicedate" [ngClass]="{ 'is-invalid': submitted && invoiceform['invoicedate'].errors }">
+          <div *ngIf="submitted && invoiceform['invoicedate'].errors" class="invalid-feedback" align="left">
+            <div *ngIf="invoiceform['invoicedate'].errors['required']">Invoice date is required</div>
+          </div>
+        </div>
+        
+        <div class="mb-3" >
+          <label for="invoice-type">Invoice Type</label>
+          
+          <select id="invoice-type" class="form-control"  name="invoice-type"   formControlName="invoice-type" [ngClass]="{ 'is-invalid': submitted && invoiceform['invoice-type'].errors }" >
+            <option value ="MPO">MPO</option>
+            <option value ="SPO">SPO</option>
+            <option value ="ADV">ADV</option>
+            <option value ="IUT">IUT</option>
+          </select>
+          <div *ngIf="submitted && invoiceform['invoice-type'].errors" class="invalid-feedback">
+              <span *ngIf="invoiceform['invoice-type'].errors['required']">Invoice type is required.</span>
+          </div>
+      </div>
+
+        <div class="mb-3" >
+            <label for="grandtotal">Grand Total</label>
+            
+            <input class="form-control" type="text" id="grandtotal" name="grandtotal"  formControlName="grandtotal"    [ngClass]="{'is-invalid': submitted && invoiceform['grandtotal'].errors}" >
+            <div *ngIf="submitted && invoiceform['grandtotal'].errors" class="invalid-feedback">
+                <span *ngIf="invoiceform['grandtotal'].errors['required']">Grand total is required.</span>
+            </div>
+        </div>
+        
+        
+        <div class="mb-3" >
+          <label for="currency">Currency</label>
+          
+          <select id="currency" class="form-control"  name="currency"   formControlName="currency" [ngClass]="{ 'is-invalid': submitted && invoiceform['currency'].errors }" >
+            <option value ="INR">INR</option>
+            <option value ="USD">USD</option>
+            <option value ="AUD">AUD</option>
+            <option value ="BGN">BGN</option>
+            <option value ="FUR">FUR</option>
+          </select>
+          <div *ngIf="submitted && invoiceform['currency'].errors" class="invalid-feedback">
+              <span *ngIf="invoiceform['currency'].errors['required']">Currency is required.</span>
+          </div>
+      </div>
+
+        <div class="mb-3" >
+            <label for="service-entry-no">Service Entry No.</label>
+            
+            <input class="form-control" type="text" id="service-entry-no" name="service-entry-no"  formControlName="service-entry-no"    [ngClass]="{'is-invalid': submitted && invoiceform['service-entry-no'].errors}" >
+            <div *ngIf="submitted && invoiceform['service-entry-no'].errors" class="invalid-feedback">
+                <span *ngIf="invoiceform['service-entry-no'].errors['required']">Service entry no. required.</span>
+            </div>
+        </div>
+        
+        <div class="mb-3" >
+          <label for="service-entry-year">Service Entry Year</label>
+          
+          <input class="form-control" type="text" id="service-entry-year" name="service-entry-year"  formControlName="service-entry-year"    [ngClass]="{'is-invalid': submitted && invoiceform['service-entry-year'].errors}" >
+          <div *ngIf="submitted && invoiceform['service-entry-year'].errors" class="invalid-feedback">
+              <span *ngIf="invoiceform['service-entry-year'].errors['required']">Service entry year required.</span>
+          </div>
+      </div>
+      
+      <div class="mb-3">
+        <label for="invoice-status" class="form-label fw-semibold">Status</label>
+        <div class="btn-group w-100" role="group">
+          <button type="button" class="btn btn-light border"
+            [class.btn-success]="invoiceform['invoice-status'].value === 'Accept'"
+            (click)="invoiceform['invoice-status'].setValue('Accept')">
+            <span *ngIf="invoiceform['invoice-status'].value === 'Accept'">✅ </span> Accept
+          </button>
+          <button type="button" class="btn btn-light border"
+            [class.btn-danger]="invoiceform['invoice-status'].value === 'Reject'"
+            (click)="invoiceform['invoice-status'].setValue('Reject')">
+            <span *ngIf="invoiceform['invoice-status'].value === 'Reject'">✅ </span> Reject
+          </button>
+        </div>
+        <input type="hidden" formControlName="invoice-status">
+
+        <div *ngIf="submitted && invoiceform['invoice-status'].errors" class="invalid-feedback">
+          <span *ngIf="invoiceform['invoice-status'].errors['required']">Status is required.</span>
+        </div>
+      </div>
+
+    
+    <div class="mb-3" >
+      <label for="comment">Comment</label>
+      
+      <textarea class="form-control"  id="comment" name="comment"  formControlName="comment"    [ngClass]="{'is-invalid': submitted && invoiceform['comment'].errors}" rows="4" ></textarea>
+      <div *ngIf="submitted && invoiceform['comment'].errors" class="invalid-feedback">
+          <span *ngIf="invoiceform['comment'].errors['required']">Comment is required.</span>
+      </div>
+  </div>
+        <div class="form-check mb-3">
+          <input class="form-check-input" type="checkbox" id="isvalidated" formControlName="isvalidated">
+          <label class="form-check-label" for="isvalidated">
+              Is validated?
+          </label>
+        </div>
+        <div class="hstack gap-2 justify-content-center">
+          
+          <button type="submit" class="btn btn-primary" id="add-btn"  >Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
