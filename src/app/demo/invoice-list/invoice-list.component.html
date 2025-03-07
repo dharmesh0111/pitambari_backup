@@ -76,7 +76,7 @@
           <form  [formGroup]="formFilter">
             <div class="row g-3">
               <div class="col-4"></div>
-              <h1 style="font-size: 40px; font-weight: bold;" class="validation text-center  text-primary">Validation system</h1>
+              <h1 style="font-size: 40px; font-weight: bold;" class="validation text-center  text-primary">Validation System</h1>
               <!-- <div class="col-xxl-9 col-lg-9"> -->
                 <!-- <button type="reset" class="btn btn-primary  text-white " (click)="clearfilter()"><i class="mdi mdi-filter-outline align-middle"></i> Clear Filter</button> -->
                 <div class="col-xxl-12 col-lg-3 text-end mb-2 d-flex justify-content-end align-items-center">
@@ -85,7 +85,7 @@
 
             <div class="dropdown me-2">
               <button class="btn btn-primary dropdown-toggle" type="button" id="stageFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                  Filter by Stage: {{ getSelectedStageName() }}
+                  Filter by Stage
               </button>
               <ul class="dropdown-menu" aria-labelledby="stageFilterDropdown">
                   <li><a class="dropdown-item" [class.active]="!selectedStage" href="javascript:void(0);" (click)="filterByStage('all')"><i class="ti ti-check" *ngIf="!selectedStage"></i> All</a></li>

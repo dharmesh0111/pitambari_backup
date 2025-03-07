@@ -109,8 +109,18 @@ export class InvoiceListComponent implements OnInit {
     event.preventDefault();
     this.selectedLocation = value;
     console.log('Selected Location:', value);
+  
+    // Save the filter to local storage
     this.saveFiltersToLocalStorage();
-    this.getInvoicelist();
+  
+    // Check if "My Location" is selected
+    if (value === 'myLocation') {
+      // Refresh the page to apply the location filter correctly
+      window.location.reload();
+    } else {
+      // Fetch the invoice list with the updated location filter
+      this.getInvoicelist();
+    }
   }
 
   @HostListener('window:load', ['$event'])
@@ -179,7 +189,7 @@ export class InvoiceListComponent implements OnInit {
       return;
     }
 
-    if (this.dateFilterForm['errors']?.['dateRangeInvalid']) {
+    if (moment(endDate).isBefore(startDate)) {
       Swal.fire({
         icon: 'error',
         title: 'Invalid Date Range',
@@ -237,6 +247,7 @@ export class InvoiceListComponent implements OnInit {
     this.dateFilterForm.get('startDate').updateValueAndValidity();
   }
 
+  
   getInvoicelist() {
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     this.spinner.show();
@@ -253,11 +264,13 @@ export class InvoiceListComponent implements OnInit {
 
                 // Apply Date Filter
                 if (this.selectedStartDate && this.selectedEndDate) {
-                    filteredData = filteredData.filter((item) => {
-                        const availableDate = moment.utc(item['available-date']).tz(timeZone);
-                        return availableDate.isBetween(this.selectedStartDate, this.selectedEndDate, undefined, '[]');
-                    });
-                }
+                  const startDate = moment(this.selectedStartDate).startOf('day'); // Start of the day
+                  const endDate = moment(this.selectedEndDate).endOf('day'); // End of the day
+                  filteredData = filteredData.filter((item) => {
+                      const availableDate = moment.utc(item['available-date']).tz(timeZone);
+                      return availableDate.isBetween(startDate, endDate, undefined, '[]');
+                  });
+              }
 
                 this.service.lists = await Promise.all(
                     filteredData.map(async (item) =>
