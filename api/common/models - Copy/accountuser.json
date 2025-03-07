@@ -1,0 +1,87 @@
+{
+  "name": "accountuser",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "restrictResetPasswordTokenScope": true,
+  "emailVerificationRequired": true,
+  "hidden": [
+    "password"
+  ],
+  "scope": {},
+  "properties": {
+    "createdBy": {
+      "type": "number",
+      "length": 11,
+      "mysql": {
+        "columnName": "createdBy",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 20,
+        "dataScale": 0,
+        "nullable": "Y"
+      }
+    },
+    "createdAt": {
+      "type": "date",
+      "defaultFn": "now",
+      "mysql": {
+        "columnName": "createdAt",
+        "dataType": "VARCHAR",
+        "dataLength": 50,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "lastupdatedBy": {
+      "type": "number",
+      "length": 11,
+      "mysql": {
+        "columnName": "lastupdatedBy",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 20,
+        "dataScale": 0,
+        "nullable": "Y"
+      }
+    },
+    "lastUpdatedAt": {
+      "type": "date",
+      "defaultFn": "now",
+      "mysql": {
+        "columnName": "lastUpdatedAt",
+        "dataType": "VARCHAR",
+        "dataLength": 50,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "username": {
+      "type": "string",
+      "required": true
+    },
+    "password": {
+      "type": "string",
+      "required": true,
+      "max": 20,
+      "min": 8
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "*"
+    }
+  ],
+  "methods": {}
+}

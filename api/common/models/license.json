@@ -1,0 +1,153 @@
+{
+  "name": "license",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "token": {
+      "type": "string",
+      "defaultFn": "uuidv4",
+      "index": {
+        "unique": true
+      }
+    },
+    "package": {
+      "type": "string",
+      "length": 100,
+      "mysql": {
+        "columnName": "package",
+        "dataType": "VARCHAR",
+        "dataLength": 100,
+        "nullable": "N"
+      }
+    },
+    "pages": {
+      "type": "string",
+      "length": 100,
+      "mysql": {
+        "columnName": "pages",
+        "dataType": "VARCHAR",
+        "dataLength": 100,
+        "nullable": "N"
+      }
+    },
+    "license-key": {
+      "type": "string",
+      "length": 100,
+      "mysql": {
+        "columnName": "license-key",
+        "dataType": "VARCHAR",
+        "dataLength": 100,
+        "nullable": "N"
+      }
+    },
+    "activation-status": {
+      "type": "string",
+      "length": 100,
+      "mysql": {
+        "columnName": "activation-status",
+        "dataType": "VARCHAR",
+        "dataLength": 100,
+        "nullable": "N"
+      }
+    },
+    "effective-date": {
+      "type": "date",
+      "mysql": {
+        "columnName": "effective-date",
+        "dataType": "datetime",
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "expiry-date": {
+      "type": "date",
+      "mysql": {
+        "columnName": "expiry-date",
+        "dataType": "datetime",
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "period": {
+      "type": "string",
+      "length": 100,
+      "mysql": {
+        "columnName": "period",
+        "dataType": "VARCHAR",
+        "dataLength": 100,
+        "nullable": "N"
+      }
+    },
+    "createdBy": {
+      "type": "number",
+      "length": 11,
+      "mysql": {
+        "columnName": "createdBy",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 20,
+        "dataScale": 0,
+        "nullable": "Y"
+      }
+    },
+    "createdAt": {
+      "type": "date",
+      "defaultFn": "now",
+      "mysql": {
+        "columnName": "createdAt",
+        "dataType": "VARCHAR",
+        "dataLength": 50,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    },
+    "lastupdatedBy": {
+      "type": "number",
+      "length": 11,
+      "mysql": {
+        "columnName": "lastupdatedBy",
+        "dataType": "int",
+        "dataLength": null,
+        "dataPrecision": 20,
+        "dataScale": 0,
+        "nullable": "Y"
+      }
+    },
+    "lastUpdatedAt": {
+      "type": "date",
+      "defaultFn": "now",
+      "mysql": {
+        "columnName": "lastUpdatedAt",
+        "dataType": "VARCHAR",
+        "dataLength": 50,
+        "dataPrecision": null,
+        "dataScale": null,
+        "nullable": "Y"
+      }
+    }
+  },
+  "validations": [],
+  "relations": {
+  },
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW"
+    }
+  ],
+  "methods": {}
+}
