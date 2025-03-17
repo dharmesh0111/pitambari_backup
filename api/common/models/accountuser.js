@@ -119,7 +119,7 @@ module.exports = function(AccountUser) {
         },
       }
     );
-    
+
     AccountUser.checkGoogleUser = function (email, cb) {
       AccountUser.findOne({ where: { email: email } }, function (err, user) {
         if (err) {
@@ -132,8 +132,6 @@ module.exports = function(AccountUser) {
         }
       });
     };
-    
-    
 
     // Define the remote method for updating a user
     AccountUser.remoteMethod(
@@ -164,31 +162,31 @@ module.exports = function(AccountUser) {
         },
       }
     );
-    
+
     AccountUser.updateUser = function (id, data, cb) {
       console.log('Updating user with ID:', id);
       console.log('Data to update:', data);
-    
+
       // Validate the data
       if (!data.email || !data.username || !data.location) {
         var err = new Error('Invalid data provided');
         err.statusCode = 400; // Bad Request
         return cb(err);
       }
-    
+
       // Find the user by ID
       AccountUser.findById(id, function (err, userInstance) {
         if (err) {
           console.error('Error finding user:', err);
           return cb(err);
         }
-    
+
         if (!userInstance) {
           var notFoundErr = new Error('User not found');
           notFoundErr.statusCode = 404;
           return cb(notFoundErr);
         }
-    
+
         // Prepare the payload for updating the user
         var userPayload = {
           email: data.email ? data.email.trim() : userInstance.email,
@@ -197,22 +195,21 @@ module.exports = function(AccountUser) {
           location: data.location ? data.location.trim() : userInstance.location,
           lastUpdatedAt: moment().toISOString() // Update the timestamp
         };
-    
+
         console.log('User payload:', userPayload);
-    
+
         // Update the user attributes
         userInstance.updateAttributes(userPayload, function (updateErr, updatedInstance) {
           if (updateErr) {
             console.error('Error updating user:', updateErr);
             return cb(updateErr);
           }
-    
+
           console.log('User updated successfully:', updatedInstance);
           return cb(null, { status: 'success', message: 'User updated successfully.', user: updatedInstance });
         });
       });
     };
-    
 
     AccountUser.remoteMethod(
       'addUser', {
@@ -236,17 +233,17 @@ module.exports = function(AccountUser) {
         },
       }
     );
-    
+
     AccountUser.addUser = function (data, cb) {
       console.log('Adding new user:', data);
-    
+
       // Validate the data
       if (!data.username || !data.password || !data.email || !data.realm || !data.location) {
         var err = new Error('Invalid data provided');
         err.statusCode = 400; // Bad Request
         return cb(err);
       }
-    
+
       // Prepare the payload for creating the user
       var userPayload = {
         username: data.username ? data.username.trim() : '',
@@ -258,9 +255,9 @@ module.exports = function(AccountUser) {
         createdAt: moment().toISOString(), // Add creation timestamp
         lastUpdatedAt: moment().toISOString() // Add last updated timestamp
       };
-    
+
       console.log('User payload:', userPayload);
-    
+
       // Create the new user
       AccountUser.create(userPayload, function (err, newUser) {
         if (err) {
@@ -269,6 +266,49 @@ module.exports = function(AccountUser) {
         } else {
           console.log('User added successfully:', newUser);
           cb(null, { status: 'success', message: 'User added successfully.', user: newUser });
+        }
+      });
+    };
+
+    // Define the remote method for fetching line items by invoice ID
+    AccountUser.remoteMethod(
+      'itemlist', {
+        http: {
+          path: '/itemlist',
+          verb: 'get',
+        },
+        accepts: [
+          {
+            arg: 'invoice_id',
+            type: 'number',
+            required: true,
+            description: 'Invoice ID to filter line items',
+          }
+        ],
+        documented: true,
+        description: 'Get line items for a specific invoice ID.',
+        returns: {
+          arg: 'report',
+          type: 'array',
+          root: true
+        }
+      }
+    );
+
+    AccountUser.itemlist = function (invoice_id, cb) {
+      var ds = AccountUser.dataSource;
+
+      var sql = `
+        SELECT * FROM lineitems
+        WHERE invoice_id = ?
+      `;
+
+      ds.connector.query(sql, [invoice_id], function (err, result) {
+        if (err) {
+          console.error('Error executing query:', err);
+          cb(err, []);
+        } else {
+          cb(null, result);
         }
       });
     };

@@ -329,9 +329,10 @@ export class InvoiceListComponent implements OnInit {
     this.submitted = true;
   }
 
-  navigatetodetails(ntoken) {
-    console.log("navigate ", ntoken);
-    this.router.navigate(['/invoice-list/details'], { queryParams: { id: btoa(ntoken) } });
+  navigatetodetails(id: number) {
+    // Encode the ID and navigate to the details component
+    const encodedId = btoa(id.toString());
+    this.router.navigate(['/details'], { queryParams: { id: encodedId } });
   }
 
   clearfilter() {

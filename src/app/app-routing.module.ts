@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
 import { GuestComponent } from './theme/layout/guest/guest.component';
+import { DetailsComponent } from './demo/invoice-list/details/details.component';
 
 
 const routes: Routes = [
@@ -64,6 +65,10 @@ const routes: Routes = [
       {
         path: 'user-register',
         loadComponent: () => import('./demo/user-register/user-register.component').then(c => c.UserRegisterComponent)
+      },
+      {
+        path: 'details',
+        loadComponent: () => import('./demo/invoice-list/details/details.component').then(c => c.DetailsComponent)
       },
         
 

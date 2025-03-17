@@ -160,6 +160,7 @@
                 <thead class=" bg-step">
                   <tr>
                     <th scope="col" >Sr. No</th>
+                    <th scope="col" >id</th>
                     <th scope="col" >Invoice PDF Document</th>
                     <th scope="col" >Invoice extracted Output File</th>
                     <th scope="col" >Available Date</th>    
@@ -186,6 +187,7 @@
                   <tbody  *ngIf="(invoiceList | async).length > 0">
                   <tr  *ngFor="let pdata of invoiceList | async;let i=index">
                     <th scope="row">{{service.startIndex +i}}</th>
+                    <th scope="row">{{pdata['id']}}</th>
                     <td>
                       <span  *ngIf="pdata['isvalidated'] == 1"><a [href]="pdata['filepath']" class="validatedunderlineanchor" target="_blank">{{pdata['filename']}}</a><i  class="ti ti-check validatedlarge-icon text" ></i></span>
                       <a [href]="pdata['filepath']" *ngIf="pdata['isvalidated'] != 1" class="underlineanchor" target="_blank">{{pdata['filename']}}</a>
@@ -205,7 +207,12 @@
                     <!-- <td>{{pdata['grand-total']}}</td>  
                     <td>{{pdata['barcode-number']}}</td>   
                     <td class=" text-success"><i  *ngIf="pdata['isvalidated'] == 1" class="ti ti-check large-icon" ></i></td>  -->
-                    <td><a  href="javascript: void(0);" (click)="navigatetodetails(pdata['id'])" class="text-primary" ><i class="ti ti-pencil large-icon pt-3"></i></a>          </td>
+                    <td>
+                      <a href="javascript:void(0);" (click)="navigatetodetails(pdata.id)" class="text-primary">
+                        <i class="ti ti-pencil large-icon pt-3"></i>
+                      </a>
+                    </td>
+                    
                   </tr> 
                 </tbody>
               </table>
